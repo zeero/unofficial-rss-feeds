@@ -13,9 +13,8 @@ jobs:
 
       - id: generate
         uses: google-gemini/gemini-cli-action@main
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         with:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           prompt: |
             あなたはウェブ情報を収集して整理するAIエージェントです。以下の手順に従ってください。
             
