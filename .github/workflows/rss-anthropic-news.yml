@@ -12,7 +12,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: generate
-        uses: google-gemini/gemini-cli-action@v1
+        uses: google-gemini/gemini-cli-action@main
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         with:
           prompt: |
             あなたはウェブ情報を収集して整理するAIエージェントです。以下の手順に従ってください。
@@ -38,9 +40,6 @@ jobs:
             - <pubDate> の形式は RFC-822（例: Mon, 08 Jul 2025 12:00:00 +0000）としてください。
             - <description> 内には HTML タグを使用せず、プレーンテキストのみを使ってください。
             - 最後に生成した RSS フィードを XML のコードブロックとして出力してください。
-
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Save RSS feed
         run: |
