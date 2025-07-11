@@ -46,12 +46,7 @@ jobs:
             注意事項：
             - <pubDate> の形式は RFC-822（例: Mon, 08 Jul 2025 12:00:00 +0000）としてください。
             - <description> 内には HTML タグを使用せず、プレーンテキストのみを使ってください。
-            - 最後に生成した RSS フィードを XML のコードブロックとして出力してください。
-
-      - name: Save RSS feed
-        run: |
-          mkdir -p dist
-          echo "${{ steps.generate.outputs.response }}" > dist/anthropic-news.xml
+            - 最後に生成した RSS フィードを `dist/anthropic-news.xml` として出力してください。
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
