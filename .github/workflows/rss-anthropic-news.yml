@@ -5,9 +5,17 @@ on:
   schedule:
     - cron: '0 22 * * *'
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,14 +53,15 @@ jobs:
           mkdir -p dist
           echo "${{ steps.generate.outputs.response }}" > dist/anthropic-news.xml
 
-      - name: Commit RSS feed
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
-          git add dist/anthropic-news.xml
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update RSS feed"
-            git push
-          fi
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: 'dist'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
