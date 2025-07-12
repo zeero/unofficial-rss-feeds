@@ -2,8 +2,8 @@ name: Generate Anthropic News RSS
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 22 * * *'
+  # schedule:
+  #   - cron: '0 22 * * *'
 
 permissions:
   contents: read
