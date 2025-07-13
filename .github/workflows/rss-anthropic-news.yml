@@ -19,34 +19,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: generate
-        uses: google-gemini/gemini-cli-action@main
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          prompt: |
-            あなたはウェブ情報を収集して整理するAIエージェントです。以下の手順に従ってください。
-            
-            1. https://www.anthropic.com/news をクロールして、ページ内に掲載されているすべてのニュース記事の「タイトル」「日付」「URL」「概要（本文の冒頭または meta description）」を収集してください。
-            
-            2. 各記事について、RSS 2.0 形式の <item> を構成してください。各 <item> には以下の要素を含めてください：
-               - <title>
-                 - 日本語に翻訳したものを設定してください
-               - <link>
-               - <pubDate>
-               - <description>
-                 - 日本語に翻訳したものを設定してください
-            
-            3. すべての <item> をまとめて <channel> 内に収めた、完全な RSS フィード（XML形式）を生成してください。
-            
-            4. RSSの<channel>には以下の情報を設定してください：
-               - <title>: Anthropic News
-               - <link>: https://www.anthropic.com/news
-               - <description>: Anthropic公式サイトのニュースをもとに自動生成された非公式RSSフィードです
-            
-            注意事項：
-            - <pubDate> の形式は 曜日省略のRFC-822（例: 08 Jul 2025 12:00:00 +0000）としてください。
-            - <description> 内には HTML タグを使用せず、プレーンテキストのみを使ってください。
-            - 最後に生成した RSS フィードを `dist/anthropic-news.xml` として出力してください。
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Generate RSS feed
+        run: |
+          python scripts/generate_anthropic_rss.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
