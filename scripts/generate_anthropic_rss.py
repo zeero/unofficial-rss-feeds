@@ -267,26 +267,27 @@ def extract_articles_from_dom(page_source, base_url):
 
 def translate_simple(text):
     """Simple translation using keyword replacement (fallback for Gemini translation)."""
-    translations = {
-        'Anthropic': 'Anthropic',
-        'Claude': 'Claude',
-        'AI': 'AI',
-        'artificial intelligence': '人工知能',
-        'machine learning': '機械学習',
-        'research': '研究',
-        'safety': '安全性',
-        'announcement': '発表',
-        'release': 'リリース',
-        'update': 'アップデート',
-        'new': '新しい',
-        'latest': '最新',
-        'news': 'ニュース',
-        'blog': 'ブログ',
-        'post': '投稿'
-    }
+    # 長い単語から順に置換して部分一致の問題を回避
+    translations = [
+        ('artificial intelligence', '人工知能'),
+        ('machine learning', '機械学習'),
+        ('announcement', '発表'),
+        ('research', '研究'),
+        ('release', 'リリース'),
+        ('update', 'アップデート'),
+        ('safety', '安全性'),
+        ('latest', '最新'),
+        ('news', 'ニュース'),  # "new"より前に処理
+        ('blog', 'ブログ'),
+        ('post', '投稿'),
+        ('new', '新しい'),    # より短い単語は後に処理
+        ('Anthropic', 'Anthropic'),
+        ('Claude', 'Claude'),
+        ('AI', 'AI')
+    ]
     
     translated = text
-    for en, ja in translations.items():
+    for en, ja in translations:
         translated = translated.replace(en, ja)
     
     return translated
