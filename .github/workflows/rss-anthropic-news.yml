@@ -44,7 +44,7 @@ jobs:
                - <description>: Anthropic公式サイトのニュースをもとに自動生成された非公式RSSフィードです
             
             注意事項：
-            - <pubDate> の形式は RFC-822（例: Mon, 08 Jul 2025 12:00:00 +0000）としてください。
+            - <pubDate> の形式は 曜日省略のRFC-822（例: 08 Jul 2025 12:00:00 +0000）としてください。
             - <description> 内には HTML タグを使用せず、プレーンテキストのみを使ってください。
             - 最後に生成した RSS フィードを `dist/anthropic-news.xml` として出力してください。
 
