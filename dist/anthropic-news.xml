@@ -1,1 +1,70 @@
-This file will be overwritten by the workflow
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Anthropic News</title>
+    <link>https://www.anthropic.com/news</link>
+    <description>Anthropic公式サイトのニュースをもとに自動生成された非公式RSSフィードです</description>
+    <language>ja</language>
+    <lastBuildDate>13 Jul 2025 18:19:18 +0000</lastBuildDate>
+    <item>
+      <title>AnnouncementsIntroducing Claude 4</title>
+      <link>https://www.anthropic.com/news/claude-4</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>FeaturedAnthropic raises Series E at $61.5B 投稿-money valuation</title>
+      <link>https://www.anthropic.com/news/anthropic-raises-series-e-at-usd61-5b-post-money-valuation</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>FeaturedIntroducing the Anthropic Economic Index</title>
+      <link>https://www.anthropic.com/news/the-anthropic-economic-index</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>ProductAdvancing Claude for Education2025年7月10日</title>
+      <link>https://www.anthropic.com/news/advancing-claude-for-education</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>AnnouncementsLawrence Livermore National Laboratory expands Claude for Enterprise use to empower scientists and 研究ers2025年7月9日</title>
+      <link>https://www.anthropic.com/news/lawrence-livermore-national-laboratory-expands-claude-for-enterprise-to-empower-scientists-and</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>PolicyThe Need for Transparency in Frontier AI2025年7月8日</title>
+      <link>https://www.anthropic.com/news/the-need-for-transparency-in-frontier-ai</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>Announcements·  PolicyIntroducing the Anthropic Economic Futures Program2025年6月27日</title>
+      <link>https://www.anthropic.com/news/introducing-the-anthropic-economic-futures-program</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>How People Use Claude for Support, Advice, and Companionship2025年6月27日</title>
+      <link>https://www.anthropic.com/news/how-people-use-claude-for-support-advice-and-companionship</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>ProductBuild and share AI-powered apps with Claude2025年6月26日</title>
+      <link>https://www.anthropic.com/news/claude-powered-artifacts</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>ProductTurn ideas into interactive AI-powered apps2025年6月26日</title>
+      <link>https://www.anthropic.com/news/build-artifacts</link>
+      <description>記事の詳細については、リンク先をご確認ください。</description>
+      <pubDate>13 Jul 2025 18:19:17 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
