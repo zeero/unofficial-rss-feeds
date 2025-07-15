@@ -2,8 +2,8 @@ name: Generate OpenAI ChatGPT Release Notes RSS
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 23 * * *'  # Run at 23:00 UTC daily (different from Anthropic)
+  schedule:
+    - cron: '0 23 * * *'  # Run at 23:00 UTC daily (different from Anthropic)
 
 permissions:
   contents: read
