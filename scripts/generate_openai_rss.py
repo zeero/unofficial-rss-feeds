@@ -30,7 +30,18 @@ def setup_driver():
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--window-size=1920,1080')
-    chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    chrome_options.add_argument('--disable-extensions')
+    chrome_options.add_argument('--disable-plugins')
+    chrome_options.add_argument('--disable-images')
+    chrome_options.add_argument('--disable-background-timer-throttling')
+    chrome_options.add_argument('--disable-backgrounding-occluded-windows')
+    chrome_options.add_argument('--disable-renderer-backgrounding')
+    chrome_options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+    
+    # CI環境での追加設定
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_experimental_option('useAutomationExtension', False)
     
     try:
         # Try to use ChromeDriverManager for automatic driver management
@@ -44,6 +55,9 @@ def setup_driver():
         except Exception as e2:
             print(f"Failed to setup system Chrome driver: {e2}")
             raise e2
+    
+    # ボット検出回避のための追加設定
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     
     return driver
 
@@ -168,28 +182,73 @@ def scrape_openai_releases():
         driver = setup_driver()
         
         print(f"Loading page: {url}")
-        driver.get(url)
+        
+        # リトライ機能付きページロード
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                driver.get(url)
+                print(f"Page load attempt {attempt + 1} completed")
+                break
+            except Exception as e:
+                print(f"Page load attempt {attempt + 1} failed: {e}")
+                if attempt < max_retries - 1:
+                    time.sleep(5)
+                    continue
+                else:
+                    raise e
         
         # Wait for content to load
         print("Waiting for page content to load...")
-        wait = WebDriverWait(driver, 30)
+        wait = WebDriverWait(driver, 45)
         
         # Wait for the main content area to appear
         try:
             wait.until(EC.presence_of_element_located((By.CLASS_NAME, "prose")))
+            print("Content area found, waiting for full load...")
         except TimeoutException:
-            print("Timeout waiting for content area, proceeding with current state...")
+            print("Timeout waiting for content area, trying alternative selectors...")
+            # Try alternative selectors
+            try:
+                wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
+                print("Found h1 tags, proceeding...")
+            except TimeoutException:
+                print("Still no content found, proceeding with current state...")
         
         # Add additional wait to ensure content is fully loaded
-        time.sleep(3)
+        time.sleep(8)
+        
+        # Check if we got any content
+        page_length = len(driver.page_source)
+        print(f"Page source length: {page_length} characters")
         
         # Extract articles from HTML structure
         print("Extracting articles from page content...")
+        
+        # デバッグ: ページの一部を出力
+        soup_debug = BeautifulSoup(driver.page_source, 'html.parser')
+        h1_tags = soup_debug.find_all('h1')
+        h2_tags = soup_debug.find_all('h2')
+        prose_divs = soup_debug.find_all('div', class_='prose')
+        
+        print(f"Debug info - H1 tags found: {len(h1_tags)}")
+        print(f"Debug info - H2 tags found: {len(h2_tags)}")
+        print(f"Debug info - Prose divs found: {len(prose_divs)}")
+        
+        if h1_tags:
+            print(f"First H1 content: {h1_tags[0].get_text(strip=True)[:100]}")
+        if h2_tags:
+            print(f"First H2 content: {h2_tags[0].get_text(strip=True)[:100]}")
+        
         articles = extract_openai_articles(driver.page_source, url)
         
         # If no articles found, create fallback
         if not articles:
             print("No articles found, creating fallback article...")
+            print("This might indicate:")
+            print("1. Site structure changed")
+            print("2. Bot detection preventing access")
+            print("3. Network issues in CI environment")
             articles = [{
                 'title': '最新リリースノートについては公式サイトをご確認ください',
                 'link': url,

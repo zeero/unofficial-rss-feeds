@@ -27,7 +27,8 @@ jobs:
       - name: Install Chrome and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y google-chrome-stable xvfb
+          google-chrome --version
           
       - name: Install dependencies
         run: |
@@ -36,7 +37,13 @@ jobs:
           
       - name: Generate OpenAI RSS feed
         run: |
+          # Run with display for better compatibility
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+          sleep 3
           python scripts/generate_openai_rss.py
+        env:
+          SELENIUM_HEADLESS: "1"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
