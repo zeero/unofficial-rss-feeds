@@ -65,6 +65,31 @@ def anthropic_sample_articles():
 
 
 @pytest.fixture
+def openai_sample_articles():
+    """OpenAI特有のサンプル記事データ"""
+    return [
+        {
+            'title': 'June 24, 2025: Chat search connectors (Pro)',
+            'link': 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes',
+            'description': 'Pro users are now able to use chat search connectors for Dropbox, Box, Google Drive integration.',
+            'pubDate': '24 Jun 2025 12:00:00 +0000'
+        },
+        {
+            'title': 'June 18, 2025: ChatGPT record mode',
+            'link': 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes',
+            'description': 'Capture meetings, brainstorms, or voice notes. Available for Pro, Enterprise, and Edu users.',
+            'pubDate': '18 Jun 2025 12:00:00 +0000'
+        },
+        {
+            'title': 'June 13, 2025: Improvements to ChatGPT search response quality',
+            'link': 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes',
+            'description': 'Upgraded ChatGPT search for all users to provide more comprehensive, up-to-date responses.',
+            'pubDate': '13 Jun 2025 12:00:00 +0000'
+        }
+    ]
+
+
+@pytest.fixture
 def mock_selenium_driver():
     """Seleniumドライバーのモックフィクスチャ"""
     driver = Mock()
@@ -155,6 +180,9 @@ def pytest_configure(config):
     )
     config.addinivalue_line(
         "markers", "anthropic: mark test as Anthropic-specific"
+    )
+    config.addinivalue_line(
+        "markers", "openai: mark test as OpenAI-specific"
     )
     config.addinivalue_line(
         "markers", "common: mark test as common functionality"
