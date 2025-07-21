@@ -55,14 +55,16 @@ class TestSetupDriver:
         # ChromeDriverManagerを失敗させる
         mock_manager().install.side_effect = Exception("ChromeDriverManager failed")
         
-        # 1回目の呼び出し（ChromeDriverManager）は失敗、2回目（システムChrome）は成功
+        # ChromeDriverManagerが失敗した場合、直接options のみでwebdriver.Chrome()が呼ばれて成功
         mock_driver = Mock()
-        mock_chrome.side_effect = [Exception("First call failed"), mock_driver]
+        mock_chrome.return_value = mock_driver
         
         result = setup_driver()
         
-        # 2回呼ばれることを確認（最初はService付き、次はオプションのみ）
-        assert mock_chrome.call_count == 2
+        # 1回だけ呼ばれることを確認（options のみで）
+        assert mock_chrome.call_count == 1
+        # Service が使われていないことを確認（options のみ）
+        mock_chrome.assert_called_with(options=mock_chrome.call_args[1]['options'])
         assert result == mock_driver
     
     @patch('scripts.generate_anthropic_rss.ChromeDriverManager')
