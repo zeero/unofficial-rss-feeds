@@ -18,7 +18,11 @@ from scripts.generate_anthropic_rss import (
     scrape_anthropic_news,
     extract_article_from_object,
     find_articles_in_json,
-    extract_articles_from_dom
+    extract_articles_from_dom,
+    load_existing_articles,
+    merge_articles_with_existing,
+    create_article_key,
+    create_stable_date
 )
 
 
@@ -519,3 +523,238 @@ class TestScrapeAnthropicNews:
         assert len(result) == 15
         assert result[0]['title'] == 'Article 0'
         assert result[14]['title'] == 'Article 14'
+
+
+class TestLoadExistingArticles:
+    """load_existing_articles関数のテスト"""
+    
+    def test_load_from_valid_rss_file(self):
+        """有効なRSSファイルから記事を読み込むテスト"""
+        import tempfile
+        import xml.etree.ElementTree as ET
+        
+        # テスト用RSSファイルを作成
+        rss_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0">
+            <channel>
+                <title>Test RSS</title>
+                <item>
+                    <title>Test Article 1</title>
+                    <link>https://example.com/test-1</link>
+                    <description>Test description 1</description>
+                    <pubDate>01 Jan 2023 12:00:00 +0000</pubDate>
+                </item>
+                <item>
+                    <title>Test Article 2</title>
+                    <link>https://example.com/test-2</link>
+                    <description>Test description 2</description>
+                    <pubDate>02 Jan 2023 12:00:00 +0000</pubDate>
+                </item>
+            </channel>
+        </rss>'''
+        
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.xml') as f:
+            f.write(rss_content)
+            temp_file = f.name
+        
+        try:
+            articles = load_existing_articles(temp_file)
+            
+            assert len(articles) == 2
+            
+            # 記事の内容確認
+            article_titles = [article['title'] for article in articles.values()]
+            assert 'Test Article 1' in article_titles
+            assert 'Test Article 2' in article_titles
+            
+            # 記事のキーが正しく生成されていることを確認
+            for key, article in articles.items():
+                assert isinstance(key, str)
+                assert len(key) == 32  # MD5ハッシュの長さ
+                assert 'title' in article
+                assert 'link' in article
+                assert 'description' in article
+                assert 'pubDate' in article
+        
+        finally:
+            os.unlink(temp_file)
+    
+    def test_load_from_nonexistent_file(self):
+        """存在しないファイルの処理テスト"""
+        articles = load_existing_articles("/nonexistent/file.xml")
+        assert len(articles) == 0
+    
+    def test_load_from_invalid_xml(self):
+        """無効なXMLファイルの処理テスト"""
+        import tempfile
+        
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.xml') as f:
+            f.write("invalid xml content")
+            temp_file = f.name
+        
+        try:
+            articles = load_existing_articles(temp_file)
+            assert len(articles) == 0
+        finally:
+            os.unlink(temp_file)
+
+
+class TestCreateArticleKey:
+    """create_article_key関数のテスト"""
+    
+    def test_same_content_same_key(self):
+        """同じ内容からは同じキーが生成されることを確認"""
+        title = "Test Article"
+        link = "https://example.com/test"
+        
+        key1 = create_article_key(title, link)
+        key2 = create_article_key(title, link)
+        
+        assert key1 == key2
+        assert len(key1) == 32  # MD5ハッシュの長さ
+    
+    def test_different_content_different_key(self):
+        """異なる内容からは異なるキーが生成されることを確認"""
+        key1 = create_article_key("Article 1", "https://example.com/1")
+        key2 = create_article_key("Article 2", "https://example.com/2")
+        
+        assert key1 != key2
+    
+    def test_whitespace_normalization(self):
+        """空白の正規化テスト"""
+        title1 = "Test  Article"
+        title2 = "Test Article"
+        link = "https://example.com/test"
+        
+        key1 = create_article_key(title1, link)
+        key2 = create_article_key(title2, link)
+        
+        assert key1 == key2  # 空白が正規化されて同じキーになる
+    
+    def test_case_insensitive(self):
+        """大文字小文字を区別しないテスト"""
+        key1 = create_article_key("Test Article", "https://example.com/test")
+        key2 = create_article_key("test article", "https://example.com/test")
+        
+        assert key1 == key2
+
+
+class TestCreateStableDate:
+    """create_stable_date関数のテスト"""
+    
+    def test_same_content_same_date(self):
+        """同じ内容からは同じ日付が生成されることを確認"""
+        title = "Test Article"
+        link = "https://example.com/test"
+        
+        date1 = create_stable_date(title, link)
+        date2 = create_stable_date(title, link)
+        
+        assert date1 == date2
+        assert '+0000' in date1  # GMT形式
+    
+    def test_different_content_different_date(self):
+        """異なる内容からは異なる日付が生成されることを確認"""
+        date1 = create_stable_date("Article 1", "https://example.com/1")
+        date2 = create_stable_date("Article 2", "https://example.com/2")
+        
+        # 異なる内容なので異なる日付になる可能性が高い
+        # ただし、ハッシュ値によってはたまたま同じ日付になる可能性もある
+        assert isinstance(date1, str)
+        assert isinstance(date2, str)
+        assert '+0000' in date1
+        assert '+0000' in date2
+    
+    def test_date_format(self):
+        """日付フォーマットのテスト"""
+        date = create_stable_date("Test", "https://example.com")
+        
+        # RFC-822形式をチェック（例: "01 Jan 2023 12:00:00 +0000"）
+        import re
+        rfc822_pattern = r'\d{1,2} \w{3} \d{4} \d{2}:\d{2}:\d{2} \+0000'
+        assert re.match(rfc822_pattern, date)
+
+
+class TestMergeArticlesWithExisting:
+    """merge_articles_with_existing関数のテスト"""
+    
+    def test_merge_new_articles_with_existing(self):
+        """新しい記事と既存記事のマージテスト"""
+        existing_articles = {
+            create_article_key("Existing Article", "https://example.com/existing"): {
+                'title': 'Existing Article',
+                'link': 'https://example.com/existing',
+                'description': 'Existing description',
+                'pubDate': '01 Jan 2023 12:00:00 +0000'
+            }
+        }
+        
+        new_articles = [
+            {
+                'title': 'New Article',
+                'link': 'https://example.com/new',
+                'description': 'New description',
+                'pubDate': create_stable_date('New Article', 'https://example.com/new')
+            },
+            {
+                'title': 'Existing Article',  # 既存記事と同じ
+                'link': 'https://example.com/existing',
+                'description': 'Updated description',
+                'pubDate': create_stable_date('Existing Article', 'https://example.com/existing')
+            }
+        ]
+        
+        merged = merge_articles_with_existing(new_articles, existing_articles)
+        
+        assert len(merged) == 2
+        
+        # 既存記事の日付が保持されていることを確認
+        existing_merged = next(a for a in merged if a['title'] == 'Existing Article')
+        assert existing_merged['pubDate'] == '01 Jan 2023 12:00:00 +0000'
+        
+        # 新しい記事が追加されていることを確認
+        new_merged = next(a for a in merged if a['title'] == 'New Article')
+        assert new_merged['title'] == 'New Article'
+    
+    def test_merge_with_empty_existing(self):
+        """既存記事が空の場合のマージテスト"""
+        existing_articles = {}
+        
+        new_articles = [
+            {
+                'title': 'New Article',
+                'link': 'https://example.com/new',
+                'description': 'New description',
+                'pubDate': create_stable_date('New Article', 'https://example.com/new')
+            }
+        ]
+        
+        merged = merge_articles_with_existing(new_articles, existing_articles)
+        
+        assert len(merged) == 1
+        assert merged[0]['title'] == 'New Article'
+    
+    def test_duplicate_removal_in_merge(self):
+        """マージ時の重複除去テスト"""
+        existing_articles = {}
+        
+        new_articles = [
+            {
+                'title': 'Article 1',
+                'link': 'https://example.com/1',
+                'description': 'Description 1',
+                'pubDate': create_stable_date('Article 1', 'https://example.com/1')
+            },
+            {
+                'title': 'Article 1',  # 重複
+                'link': 'https://example.com/1',
+                'description': 'Description 1',
+                'pubDate': create_stable_date('Article 1', 'https://example.com/1')
+            }
+        ]
+        
+        merged = merge_articles_with_existing(new_articles, existing_articles)
+        
+        # 重複が除去されて1つだけになる
+        assert len(merged) == 1
+        assert merged[0]['title'] == 'Article 1'

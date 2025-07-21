@@ -20,8 +20,8 @@ class TestAnthropicMainFunction:
     """Anthropic RSS生成のmain関数統合テスト"""
     
     @patch('scripts.generate_anthropic_rss.scrape_anthropic_news')
-    @patch('scripts.generate_anthropic_rss.os.makedirs')
-    def test_successful_anthropic_rss_generation(self, mock_makedirs, mock_scrape):
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
+    def test_successful_anthropic_rss_generation(self, mock_load_existing, mock_scrape):
         """正常なAnthropic RSS生成の統合テスト"""
         # スクレイピング結果をモック
         mock_articles = [
@@ -40,6 +40,9 @@ class TestAnthropicMainFunction:
         ]
         mock_scrape.return_value = mock_articles
         
+        # 既存記事の読み込みをモック（空を返す）
+        mock_load_existing.return_value = {}
+        
         # 一時ディレクトリでテスト実行
         with tempfile.TemporaryDirectory() as temp_dir:
             # カレントディレクトリを一時ディレクトリに変更
@@ -49,9 +52,6 @@ class TestAnthropicMainFunction:
                 
                 # main関数実行
                 main()
-                
-                # distディレクトリが作成されたことを確認
-                mock_makedirs.assert_called_with('dist', exist_ok=True)
                 
                 # RSSファイルが生成されたことを確認
                 rss_file_path = os.path.join('dist', 'anthropic-news.xml')
@@ -78,11 +78,11 @@ class TestAnthropicMainFunction:
                 items = channel.findall('item')
                 assert len(items) == 2
                 
-                # Anthropic固有の内容確認
-                assert items[0].find('title').text == 'Claude 4の発表'
-                assert items[0].find('link').text == 'https://www.anthropic.com/news/claude-4'
-                assert items[1].find('title').text == 'AI安全性研究の進展'
-                assert items[1].find('link').text == 'https://www.anthropic.com/news/ai-safety'
+                # Anthropic固有の内容確認（日付順にソートされるため、新しい日付が先に来る）
+                assert items[0].find('title').text == 'AI安全性研究の進展'  # 02 Jan 2023 (より新しい)
+                assert items[0].find('link').text == 'https://www.anthropic.com/news/ai-safety'
+                assert items[1].find('title').text == 'Claude 4の発表'  # 01 Jan 2023 (より古い)
+                assert items[1].find('link').text == 'https://www.anthropic.com/news/claude-4'
                 
                 # 日本語が正しく含まれていることを確認
                 assert 'Claude 4の発表' in rss_content
@@ -92,11 +92,14 @@ class TestAnthropicMainFunction:
                 os.chdir(original_cwd)
     
     @patch('scripts.generate_anthropic_rss.scrape_anthropic_news')
-    @patch('scripts.generate_anthropic_rss.os.makedirs')
-    def test_empty_anthropic_articles_handling(self, mock_makedirs, mock_scrape):
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
+    def test_empty_anthropic_articles_handling(self, mock_load_existing, mock_scrape):
         """Anthropic記事が空の場合の処理テスト"""
         # 空の記事リストを返す
         mock_scrape.return_value = []
+        
+        # 既存記事の読み込みをモック（空を返す）
+        mock_load_existing.return_value = {}
         
         with tempfile.TemporaryDirectory() as temp_dir:
             original_cwd = os.getcwd()
@@ -126,11 +129,15 @@ class TestAnthropicMainFunction:
                 os.chdir(original_cwd)
     
     @patch('scripts.generate_anthropic_rss.scrape_anthropic_news')
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
     @patch('scripts.generate_anthropic_rss.os.makedirs')
-    def test_anthropic_scraping_failure_handling(self, mock_makedirs, mock_scrape):
+    def test_anthropic_scraping_failure_handling(self, mock_makedirs, mock_load_existing, mock_scrape):
         """Anthropicスクレイピング失敗時の処理テスト"""
         # スクレイピングでエラーが発生
         mock_scrape.side_effect = Exception("Anthropic scraping failed")
+        
+        # 既存記事の読み込みをモック（空を返す）
+        mock_load_existing.return_value = {}
         
         with tempfile.TemporaryDirectory() as temp_dir:
             original_cwd = os.getcwd()
@@ -147,7 +154,8 @@ class TestAnthropicMainFunction:
                 os.chdir(original_cwd)
     
     @patch('scripts.generate_anthropic_rss.scrape_anthropic_news')
-    def test_anthropic_unicode_handling(self, mock_scrape):
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
+    def test_anthropic_unicode_handling(self, mock_load_existing, mock_scrape):
         """Anthropic特有のUnicode文字を含むRSSファイルの書き込みテスト"""
         # 日本語とAnthropic特有のキーワードを含む記事データ
         mock_articles = [
@@ -197,7 +205,8 @@ class TestAnthropicEndToEndWorkflow:
     
     @patch('scripts.generate_anthropic_rss.setup_driver')
     @patch('scripts.generate_anthropic_rss.extract_articles_from_json')
-    def test_complete_anthropic_workflow_mock(self, mock_extract_json, mock_setup_driver):
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
+    def test_complete_anthropic_workflow_mock(self, mock_load_existing, mock_extract_json, mock_setup_driver):
         """完全なAnthropic RSSワークフローのモックテスト"""
         # Seleniumドライバーのモック
         mock_driver = Mock()
@@ -232,6 +241,9 @@ class TestAnthropicEndToEndWorkflow:
             }
         ]
         mock_extract_json.return_value = mock_articles
+        
+        # 既存記事の読み込みをモック（空を返す）
+        mock_load_existing.return_value = {}
         
         with tempfile.TemporaryDirectory() as temp_dir:
             original_cwd = os.getcwd()
@@ -272,7 +284,8 @@ class TestAnthropicEndToEndWorkflow:
                 os.chdir(original_cwd)
     
     @patch('scripts.generate_anthropic_rss.scrape_anthropic_news')
-    def test_anthropic_rss_metadata_validation(self, mock_scrape):
+    @patch('scripts.generate_anthropic_rss.load_existing_articles')
+    def test_anthropic_rss_metadata_validation(self, mock_load_existing, mock_scrape):
         """生成されたAnthropic RSSのメタデータ検証"""
         # Anthropic特有の記事データ
         mock_articles = [
@@ -284,6 +297,9 @@ class TestAnthropicEndToEndWorkflow:
             }
         ]
         mock_scrape.return_value = mock_articles
+        
+        # 既存記事の読み込みをモック（空を返す）
+        mock_load_existing.return_value = {}
         
         with tempfile.TemporaryDirectory() as temp_dir:
             original_cwd = os.getcwd()

@@ -7,7 +7,7 @@ Replaces the functionality previously handled by GeminiCLI and improves article 
 import requests
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import sys
 from urllib.parse import urljoin
@@ -22,6 +22,106 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
+import hashlib
+
+def load_existing_articles(rss_file_path):
+    """Load existing articles from RSS file to preserve dates and avoid duplicates."""
+    existing_articles = {}
+    
+    if not os.path.exists(rss_file_path):
+        return existing_articles
+    
+    try:
+        tree = ET.parse(rss_file_path)
+        root = tree.getroot()
+        
+        # Find all item elements in the RSS
+        for item in root.findall('.//item'):
+            title_elem = item.find('title')
+            link_elem = item.find('link')
+            pubdate_elem = item.find('pubDate')
+            description_elem = item.find('description')
+            
+            if title_elem is not None and link_elem is not None:
+                title = title_elem.text or ''
+                link = link_elem.text or ''
+                pubdate = pubdate_elem.text if pubdate_elem is not None else ''
+                description = description_elem.text if description_elem is not None else ''
+                
+                # Create unique key based on title and link
+                article_key = create_article_key(title, link)
+                existing_articles[article_key] = {
+                    'title': title,
+                    'link': link,
+                    'description': description,
+                    'pubDate': pubdate
+                }
+    
+    except Exception as e:
+        print(f"Warning: Could not load existing RSS file: {e}")
+    
+    return existing_articles
+
+def create_article_key(title, link):
+    """Create a unique key for an article based on title and link."""
+    # Normalize title and link for comparison
+    normalized_title = re.sub(r'\s+', ' ', title.strip().lower())
+    normalized_link = link.strip().lower()
+    
+    # Create hash from normalized title and link
+    content = f"{normalized_title}|{normalized_link}"
+    return hashlib.md5(content.encode('utf-8')).hexdigest()
+
+def merge_articles_with_existing(new_articles, existing_articles):
+    """Merge new articles with existing ones, preserving dates for duplicates."""
+    merged_articles = []
+    seen_keys = set()
+    
+    for article in new_articles:
+        article_key = create_article_key(article['title'], article['link'])
+        
+        if article_key in existing_articles:
+            # Use existing article data to preserve the original date
+            merged_article = existing_articles[article_key].copy()
+            # Update description if new one is more detailed
+            if len(article['description']) > len(merged_article['description']):
+                merged_article['description'] = article['description']
+        else:
+            # This is a new article
+            merged_article = article.copy()
+            # Set a more stable date for truly new articles
+            if not article.get('pubDate') or 'datetime.now()' in str(article.get('pubDate')):
+                # Use a hash-based date for consistency
+                stable_date = create_stable_date(article['title'], article['link'])
+                merged_article['pubDate'] = stable_date
+        
+        # Avoid duplicates in the merged list
+        if article_key not in seen_keys:
+            merged_articles.append(merged_article)
+            seen_keys.add(article_key)
+    
+    return merged_articles
+
+def create_stable_date(title, link):
+    """Create a stable date based on article content for articles without publish date."""
+    # Create a hash from title and link
+    content = f"{title}|{link}"
+    hash_value = hashlib.md5(content.encode('utf-8')).hexdigest()
+    
+    # Use hash to create a pseudo-random but stable date offset
+    # Take first 8 characters of hash and convert to integer
+    hash_int = int(hash_value[:8], 16)
+    
+    # Create a date offset within the last 30 days
+    days_offset = hash_int % 30
+    hours_offset = (hash_int // 30) % 24
+    
+    # Calculate the stable date
+    base_date = datetime.now()
+    stable_date = base_date.replace(hour=hours_offset, minute=0, second=0, microsecond=0)
+    stable_date = stable_date - timedelta(days=days_offset)
+    
+    return stable_date.strftime('%d %b %Y %H:%M:%S +0000')
 
 def setup_driver():
     """Setup Chrome driver with appropriate options for both local and CI environments."""
@@ -77,7 +177,16 @@ def extract_articles_from_json(page_source):
         except (json.JSONDecodeError, KeyError) as e:
             continue
     
-    return articles
+    # Remove duplicates based on link
+    seen_keys = set()
+    unique_articles = []
+    for article in articles:
+        article_key = create_article_key(article['title'], article['link'])
+        if article_key not in seen_keys:
+            seen_keys.add(article_key)
+            unique_articles.append(article)
+    
+    return unique_articles
 
 def find_articles_in_json(data, path=""):
     """Recursively search for article data in JSON structure."""
@@ -252,7 +361,7 @@ def extract_articles_from_dom(page_source, base_url):
                 'title': title_ja,
                 'link': full_url,
                 'description': translate_simple("記事の詳細については、リンク先をご確認ください。"),
-                'pubDate': datetime.now().strftime('%d %b %Y %H:%M:%S +0000')
+                'pubDate': create_stable_date(title_ja, full_url)
             })
     
     # Remove duplicates based on link
@@ -364,10 +473,29 @@ def main():
     # Create dist directory if it doesn't exist
     os.makedirs('dist', exist_ok=True)
     
+    # Define output path
+    output_path = 'dist/anthropic-news.xml'
+    
+    # Load existing articles to preserve dates
+    print("Loading existing articles...")
+    existing_articles = load_existing_articles(output_path)
+    print(f"Found {len(existing_articles)} existing articles")
+    
     # Scrape articles
     print("Scraping Anthropic news...")
-    articles = scrape_anthropic_news()
-    print(f"Found {len(articles)} articles")
+    new_articles = scrape_anthropic_news()
+    print(f"Found {len(new_articles)} new articles")
+    
+    # Merge new articles with existing ones to preserve dates and avoid duplicates
+    print("Merging articles with existing data...")
+    articles = merge_articles_with_existing(new_articles, existing_articles)
+    print(f"Final article count: {len(articles)}")
+    
+    # Sort articles by publication date (newest first)
+    articles.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
+    
+    # Limit to most recent articles
+    articles = articles[:15]
     
     # Generate RSS feed
     print("Generating RSS feed...")
@@ -378,7 +506,6 @@ def main():
     xml_str = '<?xml version="1.0" encoding="UTF-8"?>\n' + ET.tostring(rss_element, encoding='unicode')
     
     # Write to file
-    output_path = 'dist/anthropic-news.xml'
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(xml_str)
     
