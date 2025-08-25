@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Commits for anthropics/claude-code</title>
+    <link>https://github.com/anthropics/claude-code/commits/main</link>
+    <description>Latest commits for the anthropics/claude-code repository on GitHub.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 Aug 2025 06:43:12 +0000</lastBuildDate>
+    <atom:link href="https://github.com/anthropics/claude-code/commits.rss" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Merge pull request #5802 from anthropics/boris/jymy</title>
+      <link>https://github.com/anthropics/claude-code/commit/afb0fc9156254b5d38e0533274b5e3d1cb305d65</link>
+      <description>&lt;pre&gt;fix: improve duplicate issue number extraction in auto-close script&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/afb0fc9156254b5d38e0533274b5e3d1cb305d65</guid>
+      <pubDate>Thu, 14 Aug 2025 23:38:49 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>fix: improve duplicate issue number extraction in auto-close script</title>
+      <link>https://github.com/anthropics/claude-code/commit/370a97d9397ef9e4e4f56741c0514b95002d1a7f</link>
+      <description>&lt;pre&gt;The extractDuplicateIssueNumber function now handles both #123 format
+and full GitHub issue URLs like https://github.com/owner/repo/issues/123.
+This fixes the "could not extract duplicate issue number from comment"
+errors that were occurring when the script encountered URL-formatted
+issue references in duplicate detection comments.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/370a97d9397ef9e4e4f56741c0514b95002d1a7f</guid>
+      <pubDate>Thu, 14 Aug 2025 23:37:46 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>chore: Update CHANGELOG.md</title>
+      <link>https://github.com/anthropics/claude-code/commit/f54569efd2f9be2f930e833e011c035166ee2c00</link>
+      <description>&lt;pre&gt;chore: Update CHANGELOG.md&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/f54569efd2f9be2f930e833e011c035166ee2c00</guid>
+      <pubDate>Thu, 14 Aug 2025 20:13:16 +0000</pubDate>
+      <author>GitHub Actions</author>
+    </item>
+    <item>
+      <title>chore: Update CHANGELOG.md</title>
+      <link>https://github.com/anthropics/claude-code/commit/d8cf5a874cc6ba7645e8a0b9dd817f6a3f8fd21d</link>
+      <description>&lt;pre&gt;chore: Update CHANGELOG.md&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/d8cf5a874cc6ba7645e8a0b9dd817f6a3f8fd21d</guid>
+      <pubDate>Thu, 14 Aug 2025 16:59:55 +0000</pubDate>
+      <author>GitHub Actions</author>
+    </item>
+    <item>
+      <title>chore: Update CHANGELOG.md</title>
+      <link>https://github.com/anthropics/claude-code/commit/e499db6e9edd1a6e8085b0392e62cec005fe9049</link>
+      <description>&lt;pre&gt;chore: Update CHANGELOG.md&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/e499db6e9edd1a6e8085b0392e62cec005fe9049</guid>
+      <pubDate>Mon, 11 Aug 2025 23:43:35 +0000</pubDate>
+      <author>GitHub Actions</author>
+    </item>
+    <item>
+      <title>Merge pull request #5569 from anthropics/boris/limc</title>
+      <link>https://github.com/anthropics/claude-code/commit/5300e12135baf05cc72096e356375c77ec787b48</link>
+      <description>&lt;pre&gt;Consolidate GitHub issue closure events&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/5300e12135baf05cc72096e356375c77ec787b48</guid>
+      <pubDate>Mon, 11 Aug 2025 23:07:18 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Use proper 'duplicate' state_reason for issue closures</title>
+      <link>https://github.com/anthropics/claude-code/commit/4a04589002a157dc0ca8c1698c045d0bd0692fe9</link>
+      <description>&lt;pre&gt;- Update auto-close script to use state_reason: 'duplicate' instead of 'not_planned'
+- Simplify workflow detection logic to only check for duplicate state_reason
+- Remove fallback logic for backward compatibility - use modern GitHub API
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/4a04589002a157dc0ca8c1698c045d0bd0692fe9</guid>
+      <pubDate>Mon, 11 Aug 2025 22:44:08 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Consolidate GitHub issue closure events to prevent duplicates</title>
+      <link>https://github.com/anthropics/claude-code/commit/04cace9ec00665c1158f97cb70da0f352fa484ae</link>
+      <description>&lt;pre&gt;- Remove duplicate Statsig logging from auto-close-duplicates.ts
+- GitHub workflow now handles all issue closures uniformly
+- Add 'duplicate' label to ensure proper detection by workflow
+- Prevents double-logging when script closes issues
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/04cace9ec00665c1158f97cb70da0f352fa484ae</guid>
+      <pubDate>Mon, 11 Aug 2025 22:33:31 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5564 from anthropics/boris/lptz</title>
+      <link>https://github.com/anthropics/claude-code/commit/2dbf1e97a085c6ddb98fdf6bb0fe2ad627b5c256</link>
+      <description>&lt;pre&gt;Fix GitHub Actions workflow to properly escape issue titles&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/2dbf1e97a085c6ddb98fdf6bb0fe2ad627b5c256</guid>
+      <pubDate>Mon, 11 Aug 2025 20:49:50 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Fix GitHub Actions workflow to properly escape issue titles</title>
+      <link>https://github.com/anthropics/claude-code/commit/0662600e933688febe362de97270a6c2fb869c0f</link>
+      <description>&lt;pre&gt;Prevents shell execution of backticks in issue titles by using single quotes and sed escaping.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/0662600e933688febe362de97270a6c2fb869c0f</guid>
+      <pubDate>Mon, 11 Aug 2025 20:38:40 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5562 from anthropics/boris/zivm</title>
+      <link>https://github.com/anthropics/claude-code/commit/27d2c6fdcf74dc06bb65589ab1033dd905084ebb</link>
+      <description>&lt;pre&gt;Add GitHub workflow logging for issue closure events&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/27d2c6fdcf74dc06bb65589ab1033dd905084ebb</guid>
+      <pubDate>Mon, 11 Aug 2025 20:17:26 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>chore: Update CHANGELOG.md</title>
+      <link>https://github.com/anthropics/claude-code/commit/dd53f86325af4846b41998602bcc60721c0bdf1e</link>
+      <description>&lt;pre&gt;chore: Update CHANGELOG.md&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/dd53f86325af4846b41998602bcc60721c0bdf1e</guid>
+      <pubDate>Mon, 11 Aug 2025 20:15:53 +0000</pubDate>
+      <author>GitHub Actions</author>
+    </item>
+    <item>
+      <title>Add GitHub workflow logging for issue closure events</title>
+      <link>https://github.com/anthropics/claude-code/commit/c40c658e1f469dd466c8871d8db060f05d8ebdce</link>
+      <description>&lt;pre&gt;Extends the existing log-issue-events workflow to capture detailed metrics when issues are closed, including:
+- Who closed the issue
+- Whether it was closed automatically (by a bot)
+- Whether it was closed as a duplicate
+- Number of comments and reactions at closing time
+- Issue state reason and timestamp
+
+This provides comprehensive analytics for issue lifecycle tracking alongside the existing issue creation logging.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/c40c658e1f469dd466c8871d8db060f05d8ebdce</guid>
+      <pubDate>Mon, 11 Aug 2025 20:13:52 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Remove timeout-minutes from lock-closed-issues workflow (#5455)</title>
+      <link>https://github.com/anthropics/claude-code/commit/e05411140ddf85ee5f916655c77f4f50fbb12d9b</link>
+      <description>&lt;pre&gt;The 10-minute timeout is unnecessary for this workflow as it typically
+completes quickly. Removing it allows the workflow to use the default
+GitHub Actions timeout (6 hours for public repos, 72 hours for private),
+providing more flexibility if the workflow needs to process a large
+number of issues.
+
+Also fixed trailing whitespace inconsistencies in the script.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/e05411140ddf85ee5f916655c77f4f50fbb12d9b</guid>
+      <pubDate>Sat, 09 Aug 2025 17:58:52 +0000</pubDate>
+      <author>Ashwin Bhat</author>
+    </item>
+    <item>
+      <title>Merge pull request #5429 from anthropics/boris/bzxy</title>
+      <link>https://github.com/anthropics/claude-code/commit/ce5b9164fa768123c81637472de2c42e7e82ec86</link>
+      <description>&lt;pre&gt;Add Statsig event logging to GitHub issue workflows&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/ce5b9164fa768123c81637472de2c42e7e82ec86</guid>
+      <pubDate>Sat, 09 Aug 2025 01:46:52 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Add Statsig event logging to GitHub issue workflows</title>
+      <link>https://github.com/anthropics/claude-code/commit/5af0b38a926f20deab326d06e250058fb709fc85</link>
+      <description>&lt;pre&gt;- Log events when issues are closed as duplicates in auto-close script
+- Log events when duplicate comments are added via dedupe workflow
+- Log events when new issues are created
+- Follow existing pattern from code review reactions workflow
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/5af0b38a926f20deab326d06e250058fb709fc85</guid>
+      <pubDate>Sat, 09 Aug 2025 01:26:48 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5423 from anthropics/boris/uqbo</title>
+      <link>https://github.com/anthropics/claude-code/commit/22946869b2b7bae927f0b20a5953f80f018e3db2</link>
+      <description>&lt;pre&gt;Rename auto-close duplicate issues workflow to remove "dry run"&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/22946869b2b7bae927f0b20a5953f80f018e3db2</guid>
+      <pubDate>Sat, 09 Aug 2025 00:28:36 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Enable auto-close duplicate issues workflow</title>
+      <link>https://github.com/anthropics/claude-code/commit/1579216fc7fd9052f338b06c1dcf471ad70605d0</link>
+      <description>&lt;pre&gt;Remove DRY RUN from workflow name and description to activate the automatic closing of duplicate issues after the testing period.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/1579216fc7fd9052f338b06c1dcf471ad70605d0</guid>
+      <pubDate>Fri, 08 Aug 2025 21:03:43 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Replace lock-threads action with GitHub Script (#5330)</title>
+      <link>https://github.com/anthropics/claude-code/commit/f0042afb3bf31aa7ea2613374e3210bc6015884d</link>
+      <description>&lt;pre&gt;Replaces the dessant/lock-threads action with a direct GitHub Script
+implementation to avoid the deprecated search/issues API endpoint warning.
+The new implementation:
+- Uses github.rest.issues.listForRepo() instead of the deprecated search API
+- Maintains the same 7-day inactivity threshold
+- Adds the same comment before locking
+- Uses 'resolved' as the lock reason
+- Handles pagination properly for large repositories
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/f0042afb3bf31aa7ea2613374e3210bc6015884d</guid>
+      <pubDate>Fri, 08 Aug 2025 20:02:20 +0000</pubDate>
+      <author>Ashwin Bhat</author>
+    </item>
+    <item>
+      <title>Merge pull request #5420 from anthropics/boris/cmyy</title>
+      <link>https://github.com/anthropics/claude-code/commit/6059607354e01ee31d7e5f1c7068298bd8d52d40</link>
+      <description>&lt;pre&gt;Fix workflow failure by adding workflow_dispatch trigger&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/6059607354e01ee31d7e5f1c7068298bd8d52d40</guid>
+      <pubDate>Fri, 08 Aug 2025 19:57:16 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Fix workflow failure by adding workflow_dispatch trigger</title>
+      <link>https://github.com/anthropics/claude-code/commit/478f63be73f911a0dbe2b16f5749ed38de6cbb64</link>
+      <description>&lt;pre&gt;The backfill-duplicate-comments script was failing because it tried to trigger
+claude-dedupe-issues.yml via workflow_dispatch, but that workflow only had an
+issues trigger. Added workflow_dispatch with issue_number input and updated the
+prompt to use either event or input issue number.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/478f63be73f911a0dbe2b16f5749ed38de6cbb64</guid>
+      <pubDate>Fri, 08 Aug 2025 19:55:48 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5414 from anthropics/boris/aier</title>
+      <link>https://github.com/anthropics/claude-code/commit/a7edbdc9e7f4a96175f80084bb3da1f4a0d9d3d5</link>
+      <description>&lt;pre&gt;Add workflow to backfill duplicate comments&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/a7edbdc9e7f4a96175f80084bb3da1f4a0d9d3d5</guid>
+      <pubDate>Fri, 08 Aug 2025 19:13:19 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Add workflow to backfill duplicate comments</title>
+      <link>https://github.com/anthropics/claude-code/commit/399a7dcf2f024e21a93064e047c80af61e2f7d0d</link>
+      <description>&lt;pre&gt;🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/399a7dcf2f024e21a93064e047c80af61e2f7d0d</guid>
+      <pubDate>Fri, 08 Aug 2025 19:11:08 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5413 from anthropics/boris/bktr</title>
+      <link>https://github.com/anthropics/claude-code/commit/9ced2a347081db0d12787d7e6e8583de545bf30e</link>
+      <description>&lt;pre&gt;Add script to backfill duplicate comments for old issues&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/9ced2a347081db0d12787d7e6e8583de545bf30e</guid>
+      <pubDate>Fri, 08 Aug 2025 19:08:17 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Add script to backfill duplicate comments for old issues</title>
+      <link>https://github.com/anthropics/claude-code/commit/d7aa61e6f1ef808b1817160fb4f3b2d8bec7023c</link>
+      <description>&lt;pre&gt;Creates a script that identifies old issues without duplicate detection comments and triggers the existing claude-dedupe-issues workflow for each one. This helps ensure historical issues get proper duplicate detection coverage.
+
+Features:
+- Scans issues from configurable time period (default 30 days)
+- Skips issues that already have duplicate detection comments
+- Triggers existing workflow instead of duplicating logic
+- Includes dry-run mode and rate limiting for safety
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/d7aa61e6f1ef808b1817160fb4f3b2d8bec7023c</guid>
+      <pubDate>Fri, 08 Aug 2025 19:03:40 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5411 from anthropics/boris/gity</title>
+      <link>https://github.com/anthropics/claude-code/commit/072856dd5b7740cc2cae1c0ed3b7c10633632e15</link>
+      <description>&lt;pre&gt;Update auto-close-duplicates script to actually close issues&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/072856dd5b7740cc2cae1c0ed3b7c10633632e15</guid>
+      <pubDate>Fri, 08 Aug 2025 18:54:07 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Update auto-close-duplicates script to actually close issues</title>
+      <link>https://github.com/anthropics/claude-code/commit/1cc90e9b788c47fafaac31b09ee8d3407775d8d6</link>
+      <description>&lt;pre&gt;- Remove dry run mode and implement actual issue closing
+- Extract duplicate issue number from bot comments
+- Close issues via GitHub API with proper state and comments
+- Add error handling for API failures
+- Use Claude Code comment format with reopening instructions
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/1cc90e9b788c47fafaac31b09ee8d3407775d8d6</guid>
+      <pubDate>Fri, 08 Aug 2025 18:48:27 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>Merge pull request #5409 from anthropics/boris/cuxg</title>
+      <link>https://github.com/anthropics/claude-code/commit/483e0e892f105f5b147f27205e7ed1ad7dd458c2</link>
+      <description>&lt;pre&gt;Improve auto-close duplicates script pagination and filtering&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/483e0e892f105f5b147f27205e7ed1ad7dd458c2</guid>
+      <pubDate>Fri, 08 Aug 2025 18:31:03 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+    <item>
+      <title>chore: Update CHANGELOG.md</title>
+      <link>https://github.com/anthropics/claude-code/commit/5248fa06bc25c07ac98782120162565b09027b0a</link>
+      <description>&lt;pre&gt;chore: Update CHANGELOG.md&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/5248fa06bc25c07ac98782120162565b09027b0a</guid>
+      <pubDate>Fri, 08 Aug 2025 18:22:13 +0000</pubDate>
+      <author>GitHub Actions</author>
+    </item>
+    <item>
+      <title>Improve auto-close duplicates script pagination and filtering</title>
+      <link>https://github.com/anthropics/claude-code/commit/eb48a37a4869c83b90f311a283ce5339415943fe</link>
+      <description>&lt;pre&gt;- Add pagination to fetch more than 100 issues (up to 20 pages/2000 issues)
+- Filter to only process issues created more than 3 days ago
+- Add created_at field to GitHubIssue interface
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;&lt;/pre&gt;</description>
+      <guid isPermaLink="true">https://github.com/anthropics/claude-code/commit/eb48a37a4869c83b90f311a283ce5339415943fe</guid>
+      <pubDate>Fri, 08 Aug 2025 18:21:27 +0000</pubDate>
+      <author>Boris Cherny</author>
+    </item>
+  </channel>
+</rss>
