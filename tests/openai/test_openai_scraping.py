@@ -196,8 +196,10 @@ class TestOpenAIWebScraping:
         mock_driver.page_source = "<html><body>No articles found</body></html>"
         mock_setup.return_value = mock_driver
         
-        with patch('scripts.generate_openai_rss.extract_openai_articles') as mock_extract:
+        with patch('scripts.generate_openai_rss.extract_openai_articles') as mock_extract, \
+             patch('scripts.generate_openai_rss.get_static_backup_articles') as mock_backup:
             mock_extract.return_value = []  # 空の記事リスト
+            mock_backup.return_value = []   # バックアップも空
             
             result = scrape_openai_releases()
             
