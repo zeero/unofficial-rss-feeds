@@ -1,8 +1,14 @@
 import pytest
 import os
 import xml.etree.ElementTree as ET
+import sys
+
+# プロジェクトルートをパスに追加
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 from scripts.generate_ollama_rss import translate_simple, parse_relative_date, fetch_ollama_models, generate_rss
 
+@pytest.mark.ollama
+@pytest.mark.unit
 def test_translate_simple():
     """Test the translation logic."""
     assert "推論" in translate_simple("reasoning")
@@ -18,6 +24,8 @@ def test_translate_simple():
     assert "フロンティアレベル" in translated
     assert "パフォーマンス" in translated
 
+@pytest.mark.ollama
+@pytest.mark.unit
 def test_parse_relative_date():
     """Test relative date parsing."""
     date_str = parse_relative_date("1 week ago")
@@ -26,6 +34,8 @@ def test_parse_relative_date():
     date_str2 = parse_relative_date("2 months ago")
     assert "+0000" in date_str2
 
+@pytest.mark.ollama
+@pytest.mark.unit
 def test_generate_rss():
     """Test RSS generation from articles."""
     articles = [
@@ -45,6 +55,7 @@ def test_generate_rss():
     assert item.find("title").text == "test-model"
     assert item.find("link").text == "https://ollama.com/library/test-model"
 
+@pytest.mark.ollama
 @pytest.mark.integration
 def test_fetch_ollama_models():
     """Integration test to fetch real data (if internet is available)."""
