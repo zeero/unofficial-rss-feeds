@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Ollama Models</title>
+    <link>https://ollama.com/search?sort=newest</link>
+    <description>Ollamaの最新モデル一覧</description>
+    <language>ja</language>
+    <lastBuildDate>Sat, 30 May 2026 05:09:07 +0000</lastBuildDate>
+    <item>
+      <title>gemma4</title>
+      <link>https://ollama.com/library/gemma4</link>
+      <description>Gemma 4 models are するように設計された 提供 フロンティアレベル パフォーマンス at each size. They are に適した 推論, エージェントワークフロー, コーディング, and マルチモーダル理解. (Updated: 1 週間前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/gemma4</guid>
+      <pubDate>Sat, 23 May 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>qwen3.5</title>
+      <link>https://ollama.com/library/qwen3.5</link>
+      <description>Qwen 3.5 is a family of オープンソース multimodal models that 提供s 卓越した有用性 and パフォーマンス. (Updated: 1 週間 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/qwen3.5</guid>
+      <pubDate>Sat, 23 May 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>qwen3.6</title>
+      <link>https://ollama.com/library/qwen3.6</link>
+      <description>Qwen3.6 提供s substantial アップグレード in agentic コーディング and thinking 保存 than 以前の Qwen models. (Updated: 1 週間 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/qwen3.6</guid>
+      <pubDate>Sat, 23 May 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>glm-5.1</title>
+      <link>https://ollama.com/library/glm-5.1</link>
+      <description>GLM-5.1 is our 次世代 フラッグシップモデル for agentic engineering, with 大幅に強化された コーディング capabilities than its 前身. It 最先端を達成 パフォーマンス on SWE-Bench Pro and リード GLM-5 by a 大差. (Updated: 1 ヶ月 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/glm-5.1</guid>
+      <pubDate>Thu, 30 Apr 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>minimax-m2.7</title>
+      <link>https://ollama.com/library/minimax-m2.7</link>
+      <description>MiniMax's M2-series model for コーディング, エージェントワークフロー, and プロフェッショナルな生産性. (Updated: 2 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/minimax-m2.7</guid>
+      <pubDate>Tue, 31 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>nemotron3</title>
+      <link>https://ollama.com/library/nemotron3</link>
+      <description>NVIDIA Nemotron 3 Nano Omni is a multimodal large language model that unifies video, audio, image, and text understanding to support エンタープライズグレード Q&amp;A, summarization, transcription, and ドキュメントインテリジェンス workflows. (Updated: 1 ヶ月 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/nemotron3</guid>
+      <pubDate>Thu, 30 Apr 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>nemotron-3-super</title>
+      <link>https://ollama.com/library/nemotron-3-super</link>
+      <description>NVIDIA Nemotron 3 Super is a 120B open MoE model activating just 12B parameters to 提供 maximum 計算効率 and 精度 for 複雑な マルチエージェントアプリケーション. (Updated: 2 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/nemotron-3-super</guid>
+      <pubDate>Tue, 31 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>glm-5</title>
+      <link>https://ollama.com/library/glm-5</link>
+      <description>A strong 推論 and agentic model from Z.ai with 744B total parameters (40B active), built for 複雑な システムエンジニアリング and 長期タスク. (Updated: 3 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/glm-5</guid>
+      <pubDate>Sun, 01 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>minimax-m2.5</title>
+      <link>https://ollama.com/library/minimax-m2.5</link>
+      <description>MiniMax-M2.5 is a state-of-the-art large language model designed for 現実世界 productivity and コーディング tasks. (Updated: 3 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/minimax-m2.5</guid>
+      <pubDate>Sun, 01 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>lfm2</title>
+      <link>https://ollama.com/library/lfm2</link>
+      <description>LFM2 is a family of ハイブリッドモデル designed for デバイス上での展開. LFM2-24B-A2B is the largest model in the family, scaling the architecture to 24 billion parameters while keeping 推論効率が高い. (Updated: 3 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/lfm2</guid>
+      <pubDate>Sun, 01 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>glm-4.7</title>
+      <link>https://ollama.com/library/glm-4.7</link>
+      <description>Advancing the コーディング Capability (Updated: 5 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/glm-4.7</guid>
+      <pubDate>Wed, 31 Dec 2025 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>gemini-3-flash-preview</title>
+      <link>https://ollama.com/library/gemini-3-flash-preview</link>
+      <description>Gemini 3 Flash offers frontier intelligence built for speed at a fraction of the cost. (Updated: 5 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/gemini-3-flash-preview</guid>
+      <pubDate>Wed, 31 Dec 2025 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>qwen3-coder-next</title>
+      <link>https://ollama.com/library/qwen3-coder-next</link>
+      <description>Qwen3-Coder-Next is a コーディング-focused language model from Alibaba's Qwen team, 最適化された agentic コーディング workflows and ローカル開発. (Updated: 3 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/qwen3-coder-next</guid>
+      <pubDate>Sun, 01 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>minimax-m2.1</title>
+      <link>https://ollama.com/library/minimax-m2.1</link>
+      <description>Exceptional 多言語対応能力 to 高める code engineering (Updated: 5 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/minimax-m2.1</guid>
+      <pubDate>Wed, 31 Dec 2025 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>translategemma</title>
+      <link>https://ollama.com/library/translategemma</link>
+      <description>A new コレクション open translation models built on Gemma 3, helping people を越えてコミュニケーション 55 languages. (Updated: 4 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/translategemma</guid>
+      <pubDate>Fri, 30 Jan 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>deepseek-v3.2</title>
+      <link>https://ollama.com/library/deepseek-v3.2</link>
+      <description>DeepSeek-V3.2, a model that 調和させる high computational efficiency with 優れた 推論 and agent パフォーマンス. (Updated: 5 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/deepseek-v3.2</guid>
+      <pubDate>Wed, 31 Dec 2025 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>kimi-k2.6</title>
+      <link>https://ollama.com/library/kimi-k2.6</link>
+      <description>Kimi K2.6 is an オープンソース, ネイティブ multimodal agentic model that advances 実用的な能力 in long-horizon コーディング, コーディング-driven design, 積極的な自律実行, and スウォームベースのタスクオーケストレーション. (Updated: 1 ヶ月 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/kimi-k2.6</guid>
+      <pubDate>Thu, 30 Apr 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>glm-4.7-flash</title>
+      <link>https://ollama.com/library/glm-4.7-flash</link>
+      <description>As the strongest model in the 30B class, GLM-4.7-Flash offers a new option for 軽量デプロイメント that バランスをとる パフォーマンス and efficiency. (Updated: 4 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/glm-4.7-flash</guid>
+      <pubDate>Fri, 30 Jan 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>glm-ocr</title>
+      <link>https://ollama.com/library/glm-ocr</link>
+      <description>GLM-OCR is a multimodal OCR model for 複雑な ドキュメント理解, built on the GLM-V encoder–decoder architecture. (Updated: 3 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/glm-ocr</guid>
+      <pubDate>Sun, 01 Mar 2026 05:08:23 +0000</pubDate>
+    </item>
+    <item>
+      <title>lfm2.5-thinking</title>
+      <link>https://ollama.com/library/lfm2.5-thinking</link>
+      <description>LFM2.5 is a new family of ハイブリッドモデル designed for デバイス上での展開. (Updated: 4 ヶ月s 前)</description>
+      <guid isPermaLink="true">https://ollama.com/library/lfm2.5-thinking</guid>
+      <pubDate>Fri, 30 Jan 2026 05:08:23 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
